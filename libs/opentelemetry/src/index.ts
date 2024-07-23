@@ -15,12 +15,12 @@ function setupOpenTelemetry(serviceName: string) {
       [SEMRESATTRS_SERVICE_NAME]: serviceName,
     }),
     traceExporter: new OTLPTraceExporter({
-      url: 'http://localhost:4318/v1/traces',
+      url: 'http://jaeger:4318/v1/traces',
       headers: {},
     }),
     metricReader: new PeriodicExportingMetricReader({
       exporter: new OTLPMetricExporter({
-        url: 'http://localhost:4318/v1/metrics',
+        url: 'http://jaeger:4318/v1/metrics',
         headers: {},
       }),
     }),

@@ -1,0 +1,55 @@
+version: "3"
+services:
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "4318:4318"
+      - "4317:4317"
+    environment:
+      - LOG_LEVEL=debug
+    networks:
+      - jaeger-example
+  rabbitmq:
+    image: rabbitmq:3.9-management
+    container_name: rabbitmq
+    restart: always
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - /var/lib/rabbitmq
+    networks:
+      - jaeger-example
+  api-service:
+    depends_on:
+      - jaeger
+      - rabbitmq
+    container_name: api-service
+    build:
+      context: .
+      args:
+        - APP=api-service
+    restart: always
+    ports:
+      - 3001:3000
+    networks:
+      - jaeger-example
+  user-service:
+    depends_on:
+      - jaeger
+      - rabbitmq
+    container_name: user-service
+    build:
+      context: .
+      args:
+        - APP=user-service
+    restart: always
+    ports:
+      - 3002:3000
+    networks:
+      - jaeger-example
+
+networks:
+  jaeger-example:
