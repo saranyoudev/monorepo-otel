@@ -27,6 +27,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/user-service/tsconfig.app.json"
       }
+    },
+    "opentelemetry": {
+      "type": "library",
+      "root": "libs/opentelemetry",
+      "entryFile": "index",
+      "sourceRoot": "libs/opentelemetry/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/opentelemetry/tsconfig.lib.json"
+      }
     }
   }
 }
